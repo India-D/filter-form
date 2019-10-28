@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Filter form</title>
+</head>
+
+<body>
+    <form method="POST" action="/filter" onsubmit="mySubmit(event)" name="filterForm">
+        <input type="text" name="searchbar" placeholder="search a name">
+        <input type="submit" value="filter">
+    </form>
+    <script>
+        function mySubmit(event) {
+            event.preventDefault();
+            let searchbarValue = document.forms.filterForm.elements.searchbar.value;
+
+            fetch("http://localhost:8000/filter", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Content-Security-Policy': 'default-src none'
+                },
+                body: JSON.stringify({
+                    searchbar: searchbarValue
+                })
+            }).then(function (response) {
+                return response.json()
+            }).then(function (data) {
+                console.log(data);
+                
+            })
+        }
+    </script>
+</body>
+
+</html>
